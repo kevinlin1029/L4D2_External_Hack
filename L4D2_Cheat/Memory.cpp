@@ -55,8 +55,8 @@ void Memory::Setup()
 void Memory::GetMoudles()
 {
 	do {
-		offsets.clientBase = (DWORD64)GetModule(offsets.processID, L"client.dll").modBaseAddr;
-		offsets.engineBase = (DWORD64)GetModule(offsets.processID, L"engine.dll").modBaseAddr;
+		offsets.clientBase = (DWORD)GetModule(offsets.processID, L"client.dll").modBaseAddr;
+		offsets.engineBase = (DWORD)GetModule(offsets.processID, L"engine.dll").modBaseAddr;
 		Sleep(50);
 	} while (!offsets.clientBase && !offsets.engineBase);
 

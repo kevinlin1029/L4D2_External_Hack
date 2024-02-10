@@ -19,23 +19,23 @@ public:
 	void GetMoudles();
 	//分装自己的内存读写函数 跨进程读写
 	template <typename T>
-	T ReadMemory(DWORD64 address) {
+	T ReadMemory(DWORD address) {
 		T buffer;
 		ReadProcessMemory(offsets.hProcess, (LPCVOID)address, &buffer, sizeof(buffer), NULL);
 		return buffer;
 	}
 
 	template <typename T>
-	void WriteMemory(DWORD64 address, T val) {
+	void WriteMemory(DWORD address, T val) {
 		WriteProcessMemory(offsets.hProcess, (LPVOID)address, &val, sizeof(val), NULL);
 	}
 
 
-	void ReadBone(DWORD64 dwEntity, int nBoneIndex, Vec3& bonePos3) //读取骨骼矩阵用来测试绘制部位
+	void ReadBone(DWORD dwEntity, int nBoneIndex, Vec3& bonePos3) //读取骨骼矩阵用来测试绘制部位
 	{
-		DWORD64 tmp1, dwBoneMatrix;
+		DWORD tmp1, dwBoneMatrix;
 		tmp1 = 0x6C0;
-		dwBoneMatrix = ReadMemory<DWORD64>(dwEntity + tmp1);
+		dwBoneMatrix = ReadMemory<DWORD>(dwEntity + tmp1);
 		
 
 		bonePos3.x = ReadMemory<float>(dwBoneMatrix + nBoneIndex * 0x30 + 0xC);

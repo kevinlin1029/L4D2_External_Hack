@@ -1,2 +1,9 @@
 ﻿  Draw.cpp
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Draw.cpp(24,78): warning C4312: “类型强制转换”: 从“unsigned long”转换到更大的“LPCVOID”
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Memory.h(24,1): warning C4312: “类型强制转换”: 从“DWORD”转换到更大的“LPCVOID”
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Memory.h(38): message : 查看对正在编译的函数 模板 实例化“T Memory::ReadMemory<DWORD>(DWORD)”的引用
+          with
+          [
+              T=DWORD
+          ]
   L4D2_Cheat.vcxproj -> D:\Game\Left2_Reverse\Code\L4D2_Cheat\x64\Debug\L4D2_Cheat.exe

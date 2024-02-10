@@ -1,5 +1,6 @@
 #include "Draw.h"
 
+
 Draw draw;
 
 void Draw::GetWindowInfo()
@@ -19,8 +20,11 @@ BOOL Draw::WorldToScreen(Vec3& worldPos, Vec2& screenPos)
 {
 	GetWindowInfo();
 	float matrix[4][4];
-	ReadProcessMemory(offsets.hProcess, (LPCVOID)(offsets.engineBase + 0x601FDC + offsets.dwViewMatrix), matrix, 64, NULL);
+	DWORD Engine = mem.ReadMemory<DWORD>(offsets.engineBase + 0x601FDC);
+	ReadProcessMemory(offsets.hProcess, (LPCVOID)(Engine + offsets.dwViewMatrix), matrix, 64, NULL);
 
+	//ReadProcessMemory(offsets.hProcess, (LPCVOID)(offsets.engineBase + 0x601FDC + offsets.dwViewMatrix), matrix, 64, NULL);
+	
 	//世界坐标 ---> 剪辑坐标
 	Vec4 clipPos; //剪辑坐标
 	clipPos.x = matrix[0][0] * worldPos.x + matrix[0][1] * worldPos.y + matrix[0][2] * worldPos.z + matrix[0][3];

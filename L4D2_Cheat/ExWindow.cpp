@@ -4,8 +4,8 @@
 
 void Loop()
 {
-	DWORD64 localPlayer = mem.ReadMemory<DWORD64>(offsets.clientBase + offsets.dwLocalPlayer); //玩家自己
-	DWORD localTeam = mem.ReadMemory<DWORD64>(localPlayer + offsets.m_iTeamNum);//玩家自己的阵营标志位
+	DWORD localPlayer = mem.ReadMemory<DWORD>(offsets.clientBase + offsets.dwLocalPlayer); //玩家自己
+	DWORD localTeam = mem.ReadMemory<DWORD>(localPlayer + offsets.m_iTeamNum);//玩家自己的阵营标志位
 
 	HDC hDC = GetDC(draw.hExWnd);
 
@@ -18,7 +18,7 @@ void Loop()
 	{
 		for (int i = 0; i < 32; i++) //这里的循环值需要根据不同游戏而变动
 		{
-			DWORD64 entity = mem.ReadMemory<DWORD32>(offsets.clientBase + offsets.dwEntityList + i * 0x10);
+			DWORD entity = mem.ReadMemory<DWORD32>(offsets.clientBase + offsets.dwEntityList + i * 0x10);
 			
 			//如果是自己则跳过
 			if (localPlayer == entity) { continue; }
@@ -33,9 +33,9 @@ void Loop()
 			entityPos3.z = mem.ReadMemory<float>(entity + offsets.m_fPos + 0x8);
 			DWORD teamID = mem.ReadMemory<BYTE>(entity + offsets.m_iTeamNum);
 
-		//	LocalPos3.x = mem.ReadMemory<float>(localPlayer + offsets.m_fPos + 0x0);
-		//	LocalPos3.y = mem.ReadMemory<float>(localPlayer + offsets.m_fPos + 0x4);
-		//	LocalPos3.z = mem.ReadMemory<float>(localPlayer + offsets.m_fPos + 0x8);
+			LocalPos3.x = mem.ReadMemory<float>(localPlayer + offsets.m_fPos + 0x0);
+			LocalPos3.y = mem.ReadMemory<float>(localPlayer + offsets.m_fPos + 0x4);
+			LocalPos3.z = mem.ReadMemory<float>(localPlayer + offsets.m_fPos + 0x8);
 
 			if (teamID != 2 && teamID != 3) {
 				continue; 
