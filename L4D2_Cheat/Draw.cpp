@@ -23,7 +23,6 @@ BOOL Draw::WorldToScreen(Vec3& worldPos, Vec2& screenPos)
 	DWORD Engine = mem.ReadMemory<DWORD>(offsets.engineBase + 0x601FDC);
 	ReadProcessMemory(offsets.hProcess, (LPCVOID)(Engine + offsets.dwViewMatrix), matrix, 64, NULL);
 
-	//ReadProcessMemory(offsets.hProcess, (LPCVOID)(offsets.engineBase + 0x601FDC + offsets.dwViewMatrix), matrix, 64, NULL);
 	
 	//世界坐标 ---> 剪辑坐标
 	Vec4 clipPos; //剪辑坐标

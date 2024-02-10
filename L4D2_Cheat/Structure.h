@@ -19,3 +19,13 @@ struct Vec4 {
 	float z;
 	float w;
 };
+
+
+//¹Ç÷ÀÊý¾Ý
+#define BONE_HEAD_Ellis 61
+#define BONE_HEAD_Coach 71
+#define BONE_HEAD_Rochelle 78
+
+#define BONE_HEAD_smoker 30
+#define BONE_HEAD_Hunter 14
+

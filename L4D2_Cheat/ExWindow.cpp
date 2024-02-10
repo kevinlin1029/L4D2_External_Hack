@@ -1,5 +1,5 @@
 #pragma once
-#include <Windows.h>
+
 #include "ExWindow.h"
 
 void Loop()
@@ -9,10 +9,15 @@ void Loop()
 
 	HDC hDC = GetDC(draw.hExWnd);
 
+	HDC dcMem = CreateCompatibleDC(hDC);//创建内存DC 双缓冲区绘图
+	HBITMAP bmpMem = CreateCompatibleBitmap(hDC, draw.rectGame.right - draw.rectGame.left, draw.rectGame.bottom - draw.rectGame.top);
 
-	HBRUSH hbrush = (HBRUSH)GetStockObject(BLACK_BRUSH);
-	FillRect(hDC, &draw.rectEx, hbrush);
-	DeleteObject(hbrush);
+	SelectObject(dcMem, bmpMem); //将位图选入内存DC
+
+	//HBRUSH hbrush = (HBRUSH)GetStockObject(BLACK_BRUSH);
+	HBRUSH hBrush = CreateSolidBrush(RGB(128, 0, 0)); //GDI绘制 原生
+	//FillRect(hDC, &draw.rect, hbrush);
+	//DeleteObject(hbrush);
 
 	if (localPlayer)
 	{
@@ -43,83 +48,107 @@ void Loop()
 			if (teamID != localTeam || teamID == localTeam) {
 				DWORD entityHealth = mem.ReadMemory<DWORD>(entity + offsets.m_iHeath);
 				if (0  < entityHealth && draw.WorldToScreen(entityPos3, entityPos2)) {
-					Vec3 tmpBone3;
-					Vec2 tmpBone2;
-					for (int i = 0; i < 100; i++)
-					{
-						mem.ReadBone(entity, i, tmpBone3);
-						wchar_t buffer[MAXBYTE];
-						wsprintf(buffer, L"%d", i);
-						if (draw.WorldToScreen(tmpBone3, tmpBone2))
+
+					mem.ReadBone(entity, BONE_HEAD_Ellis, enetityHeadPos3);
+					if (draw.WorldToScreen(enetityHeadPos3, enetityHeadPos2)) {
+						//计算方框的高度和宽度
+						float height = entityPos2.y - enetityHeadPos2.y;
+						float width = height / 2;
+
+						RECT rect;
+						rect.left = entityPos2.x - (width / 2);
+						rect.top = enetityHeadPos2.y;
+						rect.right = entityPos2.x + (width / 2);
+						rect.bottom = entityPos2.y;
+						//正常的方框
+						
+						FrameRect(dcMem, &rect, hBrush);
+
+#if 0
+						Vec3 tmpBone3;
+						Vec2 tmpBone2;
+						for (int i = 0; i < 100; i++)
 						{
-							TextOut(hDC, tmpBone2.x, tmpBone2.y, buffer, 2);
-						}
+							mem.ReadBone(entity, i, tmpBone3);
+							wchar_t buffer[MAXBYTE];
+							wsprintf(buffer, L"%d", i);
+							if (draw.WorldToScreen(tmpBone3, tmpBone2))
+							{
+								TextOut(hDC, tmpBone2.x, tmpBone2.y, buffer, 2);
+							}
+#endif // 0
+
+
 					}
+
+
 				}
 			}
 		}
+		BitBlt(hDC, 0, 0, draw.rectGame.right - draw.rectGame.left, draw.rectGame.bottom - draw.rectGame.top, dcMem, 0, 0, SRCCOPY);//原色拷贝
 	}
+	DeleteObject(hBrush);
+	DeleteDC(dcMem);
+	DeleteObject(bmpMem);
 	ReleaseDC(draw.hExWnd, hDC);
 
 
-
 }
 
 
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-	switch (uMsg)
-	{
-		//绘制消息
-	case WM_PAINT:
-		Loop();
-		break;
-	case WM_CREATE:
-		break;
-	case WM_DESTROY:
-		DestroyWindow(hwnd);
-		break;
-	case WM_CLOSE:
-		PostQuitMessage(0);
-		break;
-	default:
-		return DefWindowProc(hwnd, uMsg, wParam, lParam);
-	}
-}
-
-void CreateExternalWindow()
-{
-	MSG msg; //windows消息
-	ZeroMemory(&msg, sizeof(msg));
-	GetWindowRect(offsets.hWnd, &draw.rectGame);
-	//设计窗口类
-	WNDCLASSEX wc;
-	ZeroMemory(&wc, sizeof(wc)); //初始化窗口类
-	wc.cbSize = sizeof(wc); //设置窗口类的大小，一般都是用sizeof来获取大小的
-	wc.style = CS_HREDRAW | CS_VREDRAW;
-	wc.lpfnWndProc = (WNDPROC)WindowProc;
-
-	wc.hInstance = GetModuleHandle(NULL);//窗口实例句柄，不依赖任何项
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);//窗口鼠标样式 
-	wc.hbrBackground = (HBRUSH)RGB(0, 0, 0); //窗口背景颜色
-	wc.lpszClassName = L"ExternalWindow"; //窗口类名称
-
-	RegisterClassEx(&wc); //注册窗口类
-	draw.hExWnd = CreateWindowEx(WS_EX_TOPMOST | WS_EX_TRANSPARENT | WS_EX_LAYERED, wc.lpszClassName, L"ExWindow", WS_POPUP, draw.rectGame.left, draw.rectGame.top,
-		draw.rectGame.right - draw.rectGame.left, draw.rectGame.bottom - draw.rectGame.top, NULL, NULL, wc.hInstance, NULL);
-	if (draw.hExWnd == NULL) { return; }
-	SetLayeredWindowAttributes(draw.hExWnd, RGB(0, 0, 0), 0, LWA_COLORKEY); //使窗口完全透明
-	ShowWindow(draw.hExWnd, SW_SHOW); //显示窗口
-	UpdateWindow(draw.hExWnd);
-
-	while (msg.message != WM_QUIT) {
-		//确保窗口始终在最前面
-		SetWindowPos(draw.hExWnd, HWND_TOPMOST, draw.rectGame.left, draw.rectGame.top,
-			draw.rectGame.right - draw.rectGame.left, draw.rectGame.bottom - draw.rectGame.top, SWP_SHOWWINDOW);
-		GetWindowRect(offsets.hWnd, &draw.rectGame);
-		if (PeekMessage(&msg, draw.hExWnd, 0, 0, PM_REMOVE)) {
-			TranslateMessage(&msg);//传递键盘消息
-			DispatchMessage(&msg); //派发消息 将消息传递给消息处理函数
+	LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+		switch (uMsg)
+		{
+			//绘制消息
+		case WM_PAINT:
+			Loop();
+			break;
+		case WM_CREATE:
+			break;
+		case WM_DESTROY:
+			DestroyWindow(hwnd);
+			break;
+		case WM_CLOSE:
+			PostQuitMessage(0);
+			break;
+		default:
+			return DefWindowProc(hwnd, uMsg, wParam, lParam);
 		}
-
 	}
-}
+
+	void CreateExternalWindow()
+	{
+		MSG msg; //windows消息
+		ZeroMemory(&msg, sizeof(msg));
+		GetWindowRect(offsets.hWnd, &draw.rectGame);
+		//设计窗口类
+		WNDCLASSEX wc;
+		ZeroMemory(&wc, sizeof(wc)); //初始化窗口类
+		wc.cbSize = sizeof(wc); //设置窗口类的大小，一般都是用sizeof来获取大小的
+		wc.style = CS_HREDRAW | CS_VREDRAW;
+		wc.lpfnWndProc = (WNDPROC)WindowProc;
+		wc.hInstance = GetModuleHandle(NULL);//窗口实例句柄，不依赖任何项
+		wc.hCursor = LoadCursor(NULL, IDC_ARROW);//窗口鼠标样式 
+		wc.hbrBackground = (HBRUSH)RGB(0, 0, 0); //窗口背景颜色
+		wc.lpszClassName = L"ExternalWindow"; //窗口类名称
+
+		RegisterClassEx(&wc); //注册窗口类
+		draw.hExWnd = CreateWindowEx(WS_EX_TOPMOST | WS_EX_TRANSPARENT | WS_EX_LAYERED, wc.lpszClassName, L"ExWindow", WS_POPUP, draw.rectGame.left, draw.rectGame.top,
+			draw.rectGame.right - draw.rectGame.left, draw.rectGame.bottom - draw.rectGame.top, NULL, NULL, wc.hInstance, NULL);
+		if (draw.hExWnd == NULL) { return; }
+		SetLayeredWindowAttributes(draw.hExWnd, RGB(0, 0, 0), 0, LWA_COLORKEY); //使窗口完全透明
+		ShowWindow(draw.hExWnd, SW_SHOW); //显示窗口
+		UpdateWindow(draw.hExWnd);
+
+		while (msg.message != WM_QUIT) {
+			//确保窗口始终在最前面
+			SetWindowPos(draw.hExWnd, HWND_TOPMOST, draw.rectGame.left, draw.rectGame.top,
+				draw.rectGame.right - draw.rectGame.left, draw.rectGame.bottom - draw.rectGame.top, SWP_SHOWWINDOW);
+			GetWindowRect(offsets.hWnd, &draw.rectGame);
+			if (PeekMessage(&msg, draw.hExWnd, 0, 0, PM_REMOVE)) {
+				TranslateMessage(&msg);//传递键盘消息
+				DispatchMessage(&msg); //派发消息 将消息传递给消息处理函数
+			}
+
+		}
+	}
