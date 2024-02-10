@@ -1,5 +1,3 @@
-#pragma once
-
 #include "ExWindow.h"
 
 void Loop()
@@ -8,16 +6,14 @@ void Loop()
 	DWORD localTeam = mem.ReadMemory<DWORD>(localPlayer + offsets.m_iTeamNum);//玩家自己的阵营标志位
 
 	HDC hDC = GetDC(draw.hExWnd);
+	HBRUSH hBrush = CreateSolidBrush(RGB(128, 0, 0)); //GDI绘制 原生
 
 	HDC dcMem = CreateCompatibleDC(hDC);//创建内存DC 双缓冲区绘图
 	HBITMAP bmpMem = CreateCompatibleBitmap(hDC, draw.rectGame.right - draw.rectGame.left, draw.rectGame.bottom - draw.rectGame.top);
+	HPEN hPen = CreatePen(PS_SOLID, 2, RGB(128, 0, 0));// 创建画笔 画瞄准镜方框
 
 	SelectObject(dcMem, bmpMem); //将位图选入内存DC
-
-	//HBRUSH hbrush = (HBRUSH)GetStockObject(BLACK_BRUSH);
-	HBRUSH hBrush = CreateSolidBrush(RGB(128, 0, 0)); //GDI绘制 原生
-	//FillRect(hDC, &draw.rect, hbrush);
-	//DeleteObject(hbrush);
+	SelectObject(dcMem, hPen); //将画笔和缓冲区绑定
 
 	if (localPlayer)
 	{
@@ -49,21 +45,30 @@ void Loop()
 				DWORD entityHealth = mem.ReadMemory<DWORD>(entity + offsets.m_iHeath);
 				if (0  < entityHealth && draw.WorldToScreen(entityPos3, entityPos2)) {
 
-					mem.ReadBone(entity, BONE_HEAD_Ellis, enetityHeadPos3);
+					mem.ReadBone(entity, BONE_HEAD_Coach, enetityHeadPos3);
 					if (draw.WorldToScreen(enetityHeadPos3, enetityHeadPos2)) {
 						//计算方框的高度和宽度
 						float height = entityPos2.y - enetityHeadPos2.y;
 						float width = height / 2;
 
+						//防止因为人物骨骼矩阵更新不及时导致的人物头部在人物脚底的情况下
+						if (height <= 0 || width <= 0) { continue; }
 						RECT rect;
 						rect.left = entityPos2.x - (width / 2);
 						rect.top = enetityHeadPos2.y;
 						rect.right = entityPos2.x + (width / 2);
 						rect.bottom = entityPos2.y;
-						//正常的方框
-						
-						FrameRect(dcMem, &rect, hBrush);
 
+
+						//正常的方框
+						//FrameRect(dcMem, &rect, hBrush);
+						//瞄准镜方框
+						draw.DrawRect(dcMem, rect);
+
+						//绘制血槽
+						//if (config.health) {
+							draw.DrawHP(dcMem, hBrush, rect, entityHealth);
+						//}
 #if 0
 						Vec3 tmpBone3;
 						Vec2 tmpBone2;
@@ -91,7 +96,7 @@ void Loop()
 	DeleteDC(dcMem);
 	DeleteObject(bmpMem);
 	ReleaseDC(draw.hExWnd, hDC);
-
+	DeleteObject(hPen);
 
 }
 

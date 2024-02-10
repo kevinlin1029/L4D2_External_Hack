@@ -1,6 +1,4 @@
 #include "Draw.h"
-
-
 Draw draw;
 
 void Draw::GetWindowInfo()
@@ -13,6 +11,56 @@ void Draw::GetWindowInfo()
 	GetWindowRect(offsets.hWnd, &rectEx);
 	widthEx = rectEx.right - rectEx.left;
 	heightEx = rectEx.bottom - rectEx.top;
+}
+
+
+void Draw::DrawRect(HDC hDC, RECT rect)
+{
+	float width = rect.right - rect.left;
+	int length = width / 3;
+	MoveToEx(hDC, rect.left, rect.top + length, NULL);
+	LineTo(hDC, rect.left, rect.top);
+	LineTo(hDC, rect.left + length, rect.top);
+
+	MoveToEx(hDC, rect.right, rect.top + length, NULL);
+	LineTo(hDC, rect.right, rect.top);
+	LineTo(hDC, rect.right - length, rect.top);
+
+	MoveToEx(hDC, rect.left, rect.bottom - length, NULL);
+	LineTo(hDC, rect.left, rect.bottom);
+	LineTo(hDC, rect.left + length, rect.bottom);
+
+	MoveToEx(hDC, rect.right, rect.bottom - length, NULL);
+	LineTo(hDC, rect.right, rect.bottom);
+	LineTo(hDC, rect.right - length, rect.bottom);
+
+
+
+}
+
+void Draw::DrawHP(HDC hDC, HBRUSH hBrush, RECT rect, float hp)
+{
+	//绘制背景色
+	int width = 5;
+	RECT backgroundRect = {
+		rect.left - width, //左上角 x
+		rect.top,
+		rect.left - width / 2, //这个地方的值越接近5 血槽就越细
+		rect.bottom
+	};
+	FillRect(hDC, &backgroundRect, hBrush);
+
+	//绘制绿色的血量 90 0.1
+	HBRUSH hBrush2 = CreateSolidBrush(RGB(53, 196, 36));
+	float autoTop = (rect.bottom - rect.top) * ((100 - hp) / 100) + rect.top; //100为满血血量。
+	RECT HpRect = {
+		backgroundRect.left,
+		autoTop,
+		backgroundRect.right,
+		backgroundRect.bottom,
+	};
+	FillRect(hDC, &HpRect, hBrush2);
+	DeleteObject(hBrush2);
 }
 
 

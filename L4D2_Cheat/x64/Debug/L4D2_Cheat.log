@@ -1,13 +1,14 @@
 ﻿  ExWindow.cpp
-D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\ExWindow.cpp(59,32): warning C4244: “=”: 从“float”转换到“LONG”，可能丢失数据
-D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\ExWindow.cpp(60,33): warning C4244: “=”: 从“float”转换到“LONG”，可能丢失数据
-D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\ExWindow.cpp(61,33): warning C4244: “=”: 从“float”转换到“LONG”，可能丢失数据
-D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\ExWindow.cpp(62,31): warning C4244: “=”: 从“float”转换到“LONG”，可能丢失数据
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\ExWindow.cpp(57,32): warning C4244: “=”: 从“float”转换到“LONG”，可能丢失数据
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\ExWindow.cpp(58,33): warning C4244: “=”: 从“float”转换到“LONG”，可能丢失数据
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\ExWindow.cpp(59,33): warning C4244: “=”: 从“float”转换到“LONG”，可能丢失数据
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\ExWindow.cpp(60,31): warning C4244: “=”: 从“float”转换到“LONG”，可能丢失数据
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\ExWindow.cpp(70,41): warning C4244: “参数”: 从“DWORD”转换到“float”，可能丢失数据
 D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Memory.h(24,1): warning C4312: “类型强制转换”: 从“DWORD”转换到更大的“LPCVOID”
 D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Memory.h(38): message : 查看对正在编译的函数 模板 实例化“T Memory::ReadMemory<DWORD>(DWORD)”的引用
           with
           [
               T=DWORD
           ]
-D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\ExWindow.cpp(117): warning C4715: “WindowProc”: 不是所有的控件路径都返回值
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\ExWindow.cpp(122): warning C4715: “WindowProc”: 不是所有的控件路径都返回值
   L4D2_Cheat.vcxproj -> D:\Game\Left2_Reverse\Code\L4D2_Cheat\x64\Debug\L4D2_Cheat.exe
