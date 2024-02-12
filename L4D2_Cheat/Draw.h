@@ -9,7 +9,7 @@ class Draw
 {
 public:
 	HWND hExWnd;//蒙版窗口句柄
-	RECT rectGame;//cs2游戏窗口大小信息
+	RECT rectGame;//游戏窗口大小信息
 
 
 	RECT rect; //内窗口分辨率

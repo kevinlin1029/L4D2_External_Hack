@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+#include <string>
 using namespace std;
 
 struct Vec2 {
@@ -20,6 +21,10 @@ struct Vec4 {
 	float w;
 };
 
+struct Entity {
+	char ID[20];
+};
+
 
 //¹Ç÷ÀÊý¾Ý
 #define BONE_HEAD_Ellis 61
@@ -28,4 +33,5 @@ struct Vec4 {
 
 #define BONE_HEAD_smoker 30
 #define BONE_HEAD_Hunter 14
+#define BONE_HEAD_Charger 16
 

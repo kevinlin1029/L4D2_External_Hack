@@ -43,6 +43,7 @@ public:
 		bonePos3.z = ReadMemory<float>(dwBoneMatrix + nBoneIndex * 0x30 + 0x2C);
 	}
 
+
 };
 extern Memory mem;
 

@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Draw.cpp" />
     <ClCompile Include="ExWindow.cpp" />
+    <ClCompile Include="FeatureExtension.cpp" />
     <ClCompile Include="L4D2_Cheat.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Offsets.cpp" />
@@ -148,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="Draw.h" />
     <ClInclude Include="ExWindow.h" />
+    <ClInclude Include="FeatureExtension.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="Offsets.h" />
     <ClInclude Include="Structure.h" />

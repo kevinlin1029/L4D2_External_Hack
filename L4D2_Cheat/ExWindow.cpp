@@ -17,9 +17,9 @@ void Loop()
 
 	if (localPlayer)
 	{
-		for (int i = 0; i < 32; i++) //这里的循环值需要根据不同游戏而变动
+		for (int i = 0; i < 500; i++) //这里的循环值需要根据不同游戏而变动
 		{
-			DWORD entity = mem.ReadMemory<DWORD32>(offsets.clientBase + offsets.dwEntityList + i * 0x10);
+			DWORD entity = mem.ReadMemory<DWORD>(offsets.clientBase + offsets.dwEntityList + i * 0x10);
 			
 			//如果是自己则跳过
 			if (localPlayer == entity) { continue; }
@@ -38,14 +38,25 @@ void Loop()
 			LocalPos3.y = mem.ReadMemory<float>(localPlayer + offsets.m_fPos + 0x4);
 			LocalPos3.z = mem.ReadMemory<float>(localPlayer + offsets.m_fPos + 0x8);
 
+			//开始获取entityID
+			Entity ModelID;
+			DWORD ModelID_address = mem.ReadMemory<DWORD>(entity + offsets.m_modelIdAddress);
+			ModelID = mem.ReadMemory<Entity>(ModelID_address + offsets.m_modelId);
+			ModelID.ID[sizeof(ModelID.ID)- 1] = '\0';
+			//判断目前是哪个人物，并获取其骨骼信息
+			int ModelBoneHead = GetEntityHead(ModelID);
+			//std::cout << ModelID.ID << std::endl;
+			
+
 			if (teamID != 2 && teamID != 3) {
 				continue; 
 			}
 			if (teamID != localTeam || teamID == localTeam) {
 				DWORD entityHealth = mem.ReadMemory<DWORD>(entity + offsets.m_iHeath);
 				if (0  < entityHealth && draw.WorldToScreen(entityPos3, entityPos2)) {
-
-					mem.ReadBone(entity, BONE_HEAD_Coach, enetityHeadPos3);
+					
+					
+					mem.ReadBone(entity, ModelBoneHead, enetityHeadPos3);
 					if (draw.WorldToScreen(enetityHeadPos3, enetityHeadPos2)) {
 						//计算方框的高度和宽度
 						float height = entityPos2.y - enetityHeadPos2.y;
@@ -53,6 +64,7 @@ void Loop()
 
 						//防止因为人物骨骼矩阵更新不及时导致的人物头部在人物脚底的情况下
 						if (height <= 0 || width <= 0) { continue; }
+
 						RECT rect;
 						rect.left = entityPos2.x - (width / 2);
 						rect.top = enetityHeadPos2.y;
@@ -80,8 +92,10 @@ void Loop()
 							if (draw.WorldToScreen(tmpBone3, tmpBone2))
 							{
 								TextOut(hDC, tmpBone2.x, tmpBone2.y, buffer, 2);
+	
 							}
-#endif // 0
+						}
+#endif // 0				
 
 
 					}

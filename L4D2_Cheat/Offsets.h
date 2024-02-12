@@ -14,6 +14,8 @@ public:
 	DWORD m_iHeath = 0xEC; //血量
 	DWORD m_fPos = 0x124; //坐标
 
+	DWORD m_modelIdAddress = 0x60;
+	DWORD m_modelId = 0x14;
 
 
 	//进程相关信息

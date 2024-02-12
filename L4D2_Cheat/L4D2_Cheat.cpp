@@ -20,7 +20,7 @@ int main()
 		//set up size
 		MoveWindow(console, r.left, r.right, 500, 700, TRUE);
 		cout << "\n					YYCOCO" << endl;
-		cout << "------------------------------------------------------------" << endl;
+		cout << "----------------------------------------------------------------" << endl;
 		cout << "\n [*] waiting for L4D2...." << endl;
 
 		Init();

@@ -30,7 +30,7 @@ DWORD Memory::GetProcessID(const wchar_t* windowName)
 	} while (!offsets.hWnd);
 	GetWindowThreadProcessId(offsets.hWnd, &pID);
 
-	cout << "[*] CS2 ProcessID found: " << pID << endl;
+	cout << "[*] Game ProcessID found: " << pID << endl;
 	return pID;
 }
 
