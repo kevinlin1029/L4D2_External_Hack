@@ -8,4 +8,5 @@
 #include "Memory.h"
 
 using namespace std;
-int GetEntityHead(const Entity& ModelID);
+
+const BoneMatrix* GetBoneMapping(const Entity& ModelID);

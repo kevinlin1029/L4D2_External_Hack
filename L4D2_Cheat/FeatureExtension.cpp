@@ -1,21 +1,302 @@
 #include "FeatureExtension.h"
 
-std::unordered_map<std::string, int> boneMapping = { //boneMapping是一个哈希表，它映射字符串到相应的骨骼数据。
-    {"coach", BONE_HEAD_Coach},
-    {"producer", BONE_HEAD_Rochelle},
-    {"mechanic", BONE_HEAD_Ellis},
-    {"gambler", BONE_HEAD_Rochelle},
-    {"smoker", BONE_HEAD_smoker},
-    {"hunter", BONE_HEAD_Hunter},
-    {"charger", BONE_HEAD_Charger}
+BoneMatrix Coach = { 
+ BONE_HEAD_Coach,
+ BONE_NECK_Coach, //脖子
+ BONE_LEFT_SHOULDER_Coach,//左肩
+ BONE_RIGHT_SHOULDER_Coach,//右肩
+ BONE_LEFT_ELBOW_Coach,//左肘
+ BONE_RIGHT_ELBOW_Coach,//右肘
+ BONE_LEFT_HAND_Coach,//左手
+ BONE_RIGHT_HAND_Coach,//右手
+ BONE_CROSS_Coach, //胯部
+ BONE_LEFT_KNEE_Coach,//左膝
+ BONE_RIGHT_KNEE_Coach,//右膝
+ BONE_LEFT_FOOT_Coach,//左脚
+ BONE_RIGHT_FOOT_Coach//右脚
+};
+BoneMatrix Ellis = {
+ BONE_HEAD_Ellis,
+ BONE_NECK_Ellis, //脖子
+ BONE_LEFT_SHOULDER_Ellis,//左肩
+ BONE_RIGHT_SHOULDER_Ellis,//右肩
+ BONE_LEFT_ELBOW_Ellis,//左肘
+ BONE_RIGHT_ELBOW_Ellis,//右肘
+ BONE_LEFT_HAND_Ellis,//左手
+ BONE_RIGHT_HAND_Ellis,//右手
+ BONE_CROSS_Ellis, //胯部
+ BONE_LEFT_KNEE_Ellis,//左膝
+ BONE_RIGHT_KNEE_Ellis,//右膝
+ BONE_LEFT_FOOT_Ellis,//左脚
+ BONE_RIGHT_FOOT_Ellis//右脚
+};
+BoneMatrix Rochelle = {
+ BONE_HEAD_Rochelle,
+ BONE_NECK_Rochelle, //脖子
+ BONE_LEFT_SHOULDER_Rochelle,//左肩
+ BONE_RIGHT_SHOULDER_Rochelle,//右肩
+ BONE_LEFT_ELBOW_Rochelle,//左肘
+ BONE_RIGHT_ELBOW_Rochelle,//右肘
+ BONE_LEFT_HAND_Rochelle,//左手
+ BONE_RIGHT_HAND_Rochelle,//右手
+ BONE_CROSS_Rochelle, //胯部
+ BONE_LEFT_KNEE_Rochelle,//左膝
+ BONE_RIGHT_KNEE_Rochelle,//右膝
+ BONE_LEFT_FOOT_Rochelle,//左脚
+ BONE_RIGHT_FOOT_Rochelle//右脚
+};
+BoneMatrix Nick = {
+ BONE_HEAD_Nick,
+ BONE_NECK_Nick, //脖子
+ BONE_LEFT_SHOULDER_Nick,//左肩
+ BONE_RIGHT_SHOULDER_Nick,//右肩
+ BONE_LEFT_ELBOW_Nick,//左肘
+ BONE_RIGHT_ELBOW_Nick,//右肘
+ BONE_LEFT_HAND_Nick,//左手
+ BONE_RIGHT_HAND_Nick,//右手
+ BONE_CROSS_Nick, //胯部
+ BONE_LEFT_KNEE_Nick,//左膝
+ BONE_RIGHT_KNEE_Nick,//右膝
+ BONE_LEFT_FOOT_Nick,//左脚
+ BONE_RIGHT_FOOT_Nick//右脚
 };
 
-int GetEntityHead(const Entity& ModelID) {
-    std::string Name(ModelID.ID); // 从Entity的ID字段创建一个string对象
+BoneMatrix Jockey = {
+ BONE_HEAD_Jockey,
+ BONE_NECK_Jockey, //脖子
+ BONE_LEFT_SHOULDER_Jockey,//左肩
+ BONE_RIGHT_SHOULDER_Jockey,//右肩
+ BONE_LEFT_ELBOW_Jockey,//左肘
+ BONE_RIGHT_ELBOW_Jockey,//右肘
+ BONE_LEFT_HAND_Jockey,//左手
+ BONE_RIGHT_HAND_Jockey,//右手
+ BONE_CROSS_Jockey, //胯部
+ BONE_LEFT_KNEE_Jockey,//左膝
+ BONE_RIGHT_KNEE_Jockey,//右膝
+ BONE_LEFT_FOOT_Jockey,//左脚
+ BONE_RIGHT_FOOT_Jockey//右脚
+};
+
+BoneMatrix Spitter = {
+ BONE_HEAD_Spitter,
+ BONE_NECK_Spitter, //脖子
+ BONE_LEFT_SHOULDER_Spitter,//左肩
+ BONE_RIGHT_SHOULDER_Spitter,//右肩
+ BONE_LEFT_ELBOW_Spitter,//左肘
+ BONE_RIGHT_ELBOW_Spitter,//右肘
+ BONE_LEFT_HAND_Spitter,//左手
+ BONE_RIGHT_HAND_Spitter,//右手
+ BONE_CROSS_Spitter, //胯部
+ BONE_LEFT_KNEE_Spitter,//左膝
+ BONE_RIGHT_KNEE_Spitter,//右膝
+ BONE_LEFT_FOOT_Spitter,//左脚
+ BONE_RIGHT_FOOT_Spitter//右脚
+};
+
+BoneMatrix Smoker = {
+ BONE_HEAD_Smoker,
+ BONE_NECK_Smoker, //脖子
+ BONE_LEFT_SHOULDER_Smoker,//左肩
+ BONE_RIGHT_SHOULDER_Smoker,//右肩
+ BONE_LEFT_ELBOW_Smoker,//左肘
+ BONE_RIGHT_ELBOW_Smoker,//右肘
+ BONE_LEFT_HAND_Smoker,//左手
+ BONE_RIGHT_HAND_Smoker,//右手
+ BONE_CROSS_Smoker, //胯部
+ BONE_LEFT_KNEE_Smoker,//左膝
+ BONE_RIGHT_KNEE_Smoker,//右膝
+ BONE_LEFT_FOOT_Smoker,//左脚
+ BONE_RIGHT_FOOT_Smoker//右脚
+};
+
+BoneMatrix Hunter = {
+ BONE_HEAD_Hunter,
+ BONE_NECK_Hunter, //脖子
+ BONE_LEFT_SHOULDER_Hunter,//左肩
+ BONE_RIGHT_SHOULDER_Hunter,//右肩
+ BONE_LEFT_ELBOW_Hunter,//左肘
+ BONE_RIGHT_ELBOW_Hunter,//右肘
+ BONE_LEFT_HAND_Hunter,//左手
+ BONE_RIGHT_HAND_Hunter,//右手
+ BONE_CROSS_Hunter, //胯部
+ BONE_LEFT_KNEE_Hunter,//左膝
+ BONE_RIGHT_KNEE_Hunter,//右膝
+ BONE_LEFT_FOOT_Hunter,//左脚
+ BONE_RIGHT_FOOT_Hunter//右脚
+};
+
+BoneMatrix Charger = {
+ BONE_HEAD_Charger,
+ BONE_NECK_Charger, //脖子
+ BONE_LEFT_SHOULDER_Charger,//左肩
+ BONE_RIGHT_SHOULDER_Charger,//右肩
+ BONE_LEFT_ELBOW_Charger,//左肘
+ BONE_RIGHT_ELBOW_Charger,//右肘
+ BONE_LEFT_HAND_Charger,//左手
+ BONE_RIGHT_HAND_Charger,//右手
+ BONE_CROSS_Charger, //胯部
+ BONE_LEFT_KNEE_Charger,//左膝
+ BONE_RIGHT_KNEE_Charger,//右膝
+ BONE_LEFT_FOOT_Charger,//左脚
+ BONE_RIGHT_FOOT_Charger//右脚
+};
+
+BoneMatrix Witch = {
+ BONE_HEAD_Witch,
+ BONE_NECK_Witch, //脖子
+ BONE_LEFT_SHOULDER_Witch,//左肩
+ BONE_RIGHT_SHOULDER_Witch,//右肩
+ BONE_LEFT_ELBOW_Witch,//左肘
+ BONE_RIGHT_ELBOW_Witch,//右肘
+ BONE_LEFT_HAND_Witch,//左手
+ BONE_RIGHT_HAND_Witch,//右手
+ BONE_CROSS_Witch, //胯部
+ BONE_LEFT_KNEE_Witch,//左膝
+ BONE_RIGHT_KNEE_Witch,//右膝
+ BONE_LEFT_FOOT_Witch,//左脚
+ BONE_RIGHT_FOOT_Witch//右脚
+};
+
+BoneMatrix Boomer = {
+ BONE_HEAD_Boomer,
+ BONE_NECK_Boomer, //脖子
+ BONE_LEFT_SHOULDER_Boomer,//左肩
+ BONE_RIGHT_SHOULDER_Boomer,//右肩
+ BONE_LEFT_ELBOW_Boomer,//左肘
+ BONE_RIGHT_ELBOW_Boomer,//右肘
+ BONE_LEFT_HAND_Boomer,//左手
+ BONE_RIGHT_HAND_Boomer,//右手
+ BONE_CROSS_Boomer, //胯部
+ BONE_LEFT_KNEE_Boomer,//左膝
+ BONE_RIGHT_KNEE_Boomer,//右膝
+ BONE_LEFT_FOOT_Boomer,//左脚
+ BONE_RIGHT_FOOT_Boomer//右脚
+};
+
+BoneMatrix Tank = {
+ BONE_HEAD_Tank,
+ BONE_NECK_Tank, //脖子
+ BONE_LEFT_SHOULDER_Tank,//左肩
+ BONE_RIGHT_SHOULDER_Tank,//右肩
+ BONE_LEFT_ELBOW_Tank,//左肘
+ BONE_RIGHT_ELBOW_Tank,//右肘
+ BONE_LEFT_HAND_Tank,//左手
+ BONE_RIGHT_HAND_Tank,//右手
+ BONE_CROSS_Tank, //胯部
+ BONE_LEFT_KNEE_Tank,//左膝
+ BONE_RIGHT_KNEE_Tank,//右膝
+ BONE_LEFT_FOOT_Tank,//左脚
+ BONE_RIGHT_FOOT_Tank//右脚
+};
+
+BoneMatrix Zombie = {
+ BONE_HEAD_Zombie,
+ BONE_NECK_Zombie, //脖子
+ BONE_LEFT_SHOULDER_Zombie,//左肩
+ BONE_RIGHT_SHOULDER_Zombie,//右肩
+ BONE_LEFT_ELBOW_Zombie,//左肘
+ BONE_RIGHT_ELBOW_Zombie,//右肘
+ BONE_LEFT_HAND_Zombie,//左手
+ BONE_RIGHT_HAND_Zombie,//右手
+ BONE_CROSS_Zombie, //胯部
+ BONE_LEFT_KNEE_Zombie,//左膝
+ BONE_RIGHT_KNEE_Zombie,//右膝
+ BONE_LEFT_FOOT_Zombie,//左脚
+ BONE_RIGHT_FOOT_Zombie//右脚
+};
+
+BoneMatrix Bill = {
+ BONE_HEAD_Bill,
+ BONE_NECK_Bill, //脖子
+ BONE_LEFT_SHOULDER_Bill,//左肩
+ BONE_RIGHT_SHOULDER_Bill,//右肩
+ BONE_LEFT_ELBOW_Bill,//左肘
+ BONE_RIGHT_ELBOW_Bill,//右肘
+ BONE_LEFT_HAND_Bill,//左手
+ BONE_RIGHT_HAND_Bill,//右手
+ BONE_CROSS_Bill, //胯部
+ BONE_LEFT_KNEE_Bill,//左膝
+ BONE_RIGHT_KNEE_Bill,//右膝
+ BONE_LEFT_FOOT_Bill,//左脚
+ BONE_RIGHT_FOOT_Bill//右脚
+};
+
+BoneMatrix Zoey = {
+ BONE_HEAD_Zoey,
+ BONE_NECK_Zoey, //脖子
+ BONE_LEFT_SHOULDER_Zoey,//左肩
+ BONE_RIGHT_SHOULDER_Zoey,//右肩
+ BONE_LEFT_ELBOW_Zoey,//左肘
+ BONE_RIGHT_ELBOW_Zoey,//右肘
+ BONE_LEFT_HAND_Zoey,//左手
+ BONE_RIGHT_HAND_Zoey,//右手
+ BONE_CROSS_Zoey, //胯部
+ BONE_LEFT_KNEE_Zoey,//左膝
+ BONE_RIGHT_KNEE_Zoey,//右膝
+ BONE_LEFT_FOOT_Zoey,//左脚
+ BONE_RIGHT_FOOT_Zoey//右脚
+};
+
+BoneMatrix Louis = {
+ BONE_HEAD_Louis,
+ BONE_NECK_Louis, //脖子
+ BONE_LEFT_SHOULDER_Louis,//左肩
+ BONE_RIGHT_SHOULDER_Louis,//右肩
+ BONE_LEFT_ELBOW_Louis,//左肘
+ BONE_RIGHT_ELBOW_Louis,//右肘
+ BONE_LEFT_HAND_Louis,//左手
+ BONE_RIGHT_HAND_Louis,//右手
+ BONE_CROSS_Louis, //胯部
+ BONE_LEFT_KNEE_Louis,//左膝
+ BONE_RIGHT_KNEE_Louis,//右膝
+ BONE_LEFT_FOOT_Louis,//左脚
+ BONE_RIGHT_FOOT_Louis//右脚
+};
+
+BoneMatrix Francis = {
+ BONE_HEAD_Francis,
+ BONE_NECK_Francis, //脖子
+ BONE_LEFT_SHOULDER_Francis,//左肩
+ BONE_RIGHT_SHOULDER_Francis,//右肩
+ BONE_LEFT_ELBOW_Francis,//左肘
+ BONE_RIGHT_ELBOW_Francis,//右肘
+ BONE_LEFT_HAND_Francis,//左手
+ BONE_RIGHT_HAND_Francis,//右手
+ BONE_CROSS_Francis, //胯部
+ BONE_LEFT_KNEE_Francis,//左膝
+ BONE_RIGHT_KNEE_Francis,//右膝
+ BONE_LEFT_FOOT_Francis,//左脚
+ BONE_RIGHT_FOOT_Francis//右脚
+};
+
+
+
+std::unordered_map<std::string, BoneMatrix*> boneMapping = { //boneMapping是一个哈希表，它映射字符串到相应的骨骼数据。
+    {"coach", &Coach},
+    {"producer", &Rochelle},
+    {"mechanic", &Ellis},
+    {"gambler", &Nick},
+    {"smoker", &Smoker},
+    {"hunter", &Hunter},
+    {"charger", &Charger},
+    {"jockey", &Jockey},
+    {"spitter", &Spitter},
+    {"boomer", &Boomer},
+    {"tank", &Tank},
+    {"witch", &Witch},
+    {"namvet", &Bill},
+    {"teenangst", &Zoey},
+    {"manager", &Louis},
+    {"biker", &Francis},
+    {"zombie", &Zombie}
+};
+
+const BoneMatrix* GetBoneMapping(const Entity& ModelID) {
     for (const auto& pair : boneMapping) {
-        if (Name.find(pair.first) != std::string::npos) {
-            return pair.second;
+        if (std::strstr(ModelID.ID, pair.first.c_str()) != nullptr) {
+            return pair.second; // 部分匹配成功，返回对应的BoneMatrix指针
         }
     }
-    return 0; // 默认值，如果没有匹配
+    return nullptr; // 没有匹配，返回空指针
 }
+

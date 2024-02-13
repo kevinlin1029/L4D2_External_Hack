@@ -43,20 +43,23 @@ void Loop()
 			DWORD ModelID_address = mem.ReadMemory<DWORD>(entity + offsets.m_modelIdAddress);
 			ModelID = mem.ReadMemory<Entity>(ModelID_address + offsets.m_modelId);
 			ModelID.ID[sizeof(ModelID.ID)- 1] = '\0';
-			//判断目前是哪个人物，并获取其骨骼信息
-			int ModelBoneHead = GetEntityHead(ModelID);
+
+			//判断目前是哪个人物->获取其骨骼信息
+			const BoneMatrix* Bone = GetBoneMapping(ModelID);
+			if (Bone == nullptr) { continue; }
+
 			//std::cout << ModelID.ID << std::endl;
 			
 
 			if (teamID != 2 && teamID != 3) {
 				continue; 
 			}
-			if (teamID != localTeam || teamID == localTeam) {
+			if (teamID != localTeam) {
 				DWORD entityHealth = mem.ReadMemory<DWORD>(entity + offsets.m_iHeath);
 				if (0  < entityHealth && draw.WorldToScreen(entityPos3, entityPos2)) {
 					
 					
-					mem.ReadBone(entity, ModelBoneHead, enetityHeadPos3);
+					mem.ReadBone(entity, Bone->Head, enetityHeadPos3);
 					if (draw.WorldToScreen(enetityHeadPos3, enetityHeadPos2)) {
 						//计算方框的高度和宽度
 						float height = entityPos2.y - enetityHeadPos2.y;
@@ -91,7 +94,7 @@ void Loop()
 							wsprintf(buffer, L"%d", i);
 							if (draw.WorldToScreen(tmpBone3, tmpBone2))
 							{
-								TextOut(hDC, tmpBone2.x, tmpBone2.y, buffer, 2);
+								TextOut(dcMem, tmpBone2.x, tmpBone2.y, buffer, 2);
 	
 							}
 						}

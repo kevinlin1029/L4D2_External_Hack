@@ -1,0 +1,45 @@
+﻿  Draw.cpp
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Draw.cpp(19,14): warning C4244: “初始化”: 从“LONG”转换到“float”，可能丢失数据
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Draw.cpp(20,13): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Draw.cpp(58,3): warning C4838: 从“float”转换到“LONG”需要收缩转换
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Draw.cpp(58,3): warning C4244: “初始化”: 从“float”转换到“LONG”，可能丢失数据
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Draw.cpp(72,78): warning C4312: “类型强制转换”: 从“unsigned long”转换到更大的“LPCVOID”
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Memory.h(24,1): warning C4312: “类型强制转换”: 从“DWORD”转换到更大的“LPCVOID”
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Memory.h(38): message : 查看对正在编译的函数 模板 实例化“T Memory::ReadMemory<DWORD>(DWORD)”的引用
+          with
+          [
+              T=DWORD
+          ]
+  ExWindow.cpp
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\ExWindow.cpp(72,32): warning C4244: “=”: 从“float”转换到“LONG”，可能丢失数据
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\ExWindow.cpp(73,33): warning C4244: “=”: 从“float”转换到“LONG”，可能丢失数据
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\ExWindow.cpp(74,33): warning C4244: “=”: 从“float”转换到“LONG”，可能丢失数据
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\ExWindow.cpp(75,31): warning C4244: “=”: 从“float”转换到“LONG”，可能丢失数据
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\ExWindow.cpp(85,41): warning C4244: “参数”: 从“DWORD”转换到“float”，可能丢失数据
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Memory.h(24,1): warning C4312: “类型强制转换”: 从“DWORD”转换到更大的“LPCVOID”
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Memory.h(38): message : 查看对正在编译的函数 模板 实例化“T Memory::ReadMemory<DWORD>(DWORD)”的引用
+          with
+          [
+              T=DWORD
+          ]
+  FeatureExtension.cpp
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\FeatureExtension.cpp(80,23): error C2065: “BONE_HEAD_smoker”: 未声明的标识符
+  L4D2_Cheat.cpp
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Memory.h(24,1): warning C4312: “类型强制转换”: 从“DWORD”转换到更大的“LPCVOID”
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Memory.h(38): message : 查看对正在编译的函数 模板 实例化“T Memory::ReadMemory<DWORD>(DWORD)”的引用
+          with
+          [
+              T=DWORD
+          ]
+  Memory.cpp
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Memory.cpp(58,86): warning C4311: “类型强制转换”: 从“BYTE *”到“DWORD”的指针截断
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Memory.cpp(58,86): warning C4302: “类型强制转换”: 从“BYTE *”到“DWORD”截断
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Memory.cpp(59,86): warning C4311: “类型强制转换”: 从“BYTE *”到“DWORD”的指针截断
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Memory.cpp(59,86): warning C4302: “类型强制转换”: 从“BYTE *”到“DWORD”截断
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Memory.h(24,1): warning C4312: “类型强制转换”: 从“DWORD”转换到更大的“LPCVOID”
+D:\Game\Left2_Reverse\Code\L4D2_Cheat\L4D2_Cheat\Memory.h(38): message : 查看对正在编译的函数 模板 实例化“T Memory::ReadMemory<DWORD>(DWORD)”的引用
+          with
+          [
+              T=DWORD
+          ]
+  Offsets.cpp
